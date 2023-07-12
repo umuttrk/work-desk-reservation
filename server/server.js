@@ -1,14 +1,6 @@
-const express=require('express');
+const dbConnection = require('./utils/dbConnection');
+const app = require('./app');
 
-const app = express();
+dbConnection.onConnect();
 
-
-
-
-
-
-app.get('/',  (req, res)=> {
-    res.send('<h1 style="text-align:center;">work desk reservation API </h1>')
-  })
-  
-app.listen(3000, '0.0.0.0',()=>console.log(`Your server available at http://192.168.1.113:3000`));
+app.listen(3000, '0.0.0.0', () => console.log(`Your server available at http://192.168.1.113:3000`));
