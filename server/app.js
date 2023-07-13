@@ -1,9 +1,15 @@
 const express=require('express');
 const app = express();
-const Desk = require('./models/desk');
-app.get('/',  (req, res)=> {
-    res.send('<h1 style="text-align:center;">work desk reservation API </h1>')
-  })
+require('./models/associations');
+const reservationRoutes=require('./routes/reservationRoutes');
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.get('/', (req, res) => {
+    res.send('Cyclone api')
+});
+app.use('/api/reservation',reservationRoutes)
 
 
 module.exports = app;

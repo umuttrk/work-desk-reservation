@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 
 const pass = process.env.PASS;

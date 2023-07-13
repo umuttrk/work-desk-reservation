@@ -1,5 +1,4 @@
-const {  DataTypes } = require('sequelize');
-//const Reservation=require('./reservation')
+const { DataTypes } = require('sequelize');
 
 const sequelize = require('../utils/dbConnection').sequelize
 
@@ -10,7 +9,7 @@ const Desk = sequelize.define("Desk", {
         autoIncrement: true,
         allowNull: false
     },
-    floor_number: {
+    floor_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
 
@@ -22,6 +21,14 @@ const Desk = sequelize.define("Desk", {
     y_line_order: {
         type: DataTypes.INTEGER,
         allowNull: false,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
     }
 });
 
@@ -39,24 +46,55 @@ const Reservation = sequelize.define("Reservation", {
 
     },
     start_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     end_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
-    reserved_by:{
+    reserved_by: {
         type: DataTypes.STRING,
         allowNull: false
+    }, createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
     }
 });
 
 
+const Floor = sequelize.define("Floor", {
 
+    floor_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+    },
+    floor_number: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique:true//buraya bak
+
+    }, createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    }
+
+
+})
 Desk.hasMany(Reservation, { foreignKey: 'desk_id' });
 Reservation.belongsTo(Desk, { foreignKey: 'desk_id' });
-
+Desk.belongsTo(Floor, { foreignKey: 'floor_id' });
+Floor.hasMany(Desk, { foreignKey: 'floor_id' })
 
 sequelize.sync()
     .then(() => {
@@ -67,6 +105,7 @@ sequelize.sync()
     });
 
 module.exports = {
-   Desk,
-   Reservation
+    Desk,
+    Reservation,
+    Floor
 };
