@@ -1,0 +1,7 @@
+
+.floor-item {
+    display: flex;
+    align-items: center; /* İçerikleri dikey olarak hizalar */
+    gap: 10px; /* Buton ve metin arasında 10 piksel boşluk bırakır */
+    margin-left: 50px;
+  }

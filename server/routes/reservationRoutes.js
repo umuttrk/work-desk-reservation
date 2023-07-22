@@ -20,7 +20,16 @@ router.post('/get-busy-dates', reservationController.getBusyDates)
 router.post('/reserve-desk', reservationController.reserveDesk)
 router.post('/get-my-reservations', reservationController.getMyReservations)
 router.post('/delete-my-reservation', reservationController.deleteMyReservation)
+router.post('/create-desk', reservationController.createDesk)
+router.put('/update-desk', reservationController.updateDeskGroup)
+router.delete('/delete-desk', reservationController.deleteDeskGroup)
+router.post('/create-floor', reservationController.createFloor)
 
+
+
+// TODO
+// Login register
+// Admin sayfasi oluştur
 
 
 //FOR ADMIN

@@ -2,8 +2,8 @@ const { DataTypes } = require('sequelize');
 
 const sequelize = require('../utils/dbConnection').sequelize
 
-const Desk = sequelize.define("Desk", {
-    desk_id: {
+const DeskGroup = sequelize.define("Desk_group", {
+    desk_group_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -14,13 +14,26 @@ const Desk = sequelize.define("Desk", {
         allowNull: false,
 
     },
-    x_line_order: {
+    position_x: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    y_line_order: {
+    desk_size: {
         type: DataTypes.INTEGER,
         allowNull: false,
+    },
+
+    position_y: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    rotation: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    owner: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     createdAt: {
         type: DataTypes.DATE,
@@ -66,7 +79,31 @@ const Reservation = sequelize.define("Reservation", {
     }
 });
 
+const Desk = sequelize.define("Desk", {
+    desk_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+    },
+    order_in_desk_group: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    desk_group_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    }
 
+})
 const Floor = sequelize.define("Floor", {
 
     floor_id: {
@@ -78,7 +115,7 @@ const Floor = sequelize.define("Floor", {
     floor_number: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique:true//buraya bak
+        unique: true//buraya bak
 
     }, createdAt: {
         type: DataTypes.DATE,
@@ -91,10 +128,17 @@ const Floor = sequelize.define("Floor", {
 
 
 })
+
+Floor.hasMany(DeskGroup, { foreignKey: 'floor_id' })
+DeskGroup.belongsTo(Floor, { foreignKey: 'floor_id' });
+
+
+DeskGroup.hasMany(Desk, { foreignKey: 'desk_group_id', onDelete: 'CASCADE' })
+Desk.belongsTo(DeskGroup, { foreignKey: 'desk_group_id' })
+
+
 Desk.hasMany(Reservation, { foreignKey: 'desk_id' });
 Reservation.belongsTo(Desk, { foreignKey: 'desk_id' });
-Desk.belongsTo(Floor, { foreignKey: 'floor_id' });
-Floor.hasMany(Desk, { foreignKey: 'floor_id' })
 
 sequelize.sync()
     .then(() => {
@@ -105,7 +149,8 @@ sequelize.sync()
     });
 
 module.exports = {
-    Desk,
+    DeskGroup,
     Reservation,
-    Floor
+    Floor,
+    Desk
 };

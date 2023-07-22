@@ -1,0 +1,166 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+.ust {
+
+  margin: 0px;
+  padding: 0px;
+  height: 0;
+  width: 30px;
+  border-bottom: 30px solid rgb(83, 102, 122);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+}
+
+.alt {
+  transform: rotate(180deg);
+  height: 0;
+  width: 30px;
+  border-bottom: 30px solid rgb(83, 102, 122);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+}
+.rectangle{
+  border: 1px black;
+  position: absolute;
+  height: 5px;
+  background-color: rgb(83, 102, 122);
+}
+.rectangle1 {
+  width: 30px;
+
+  left: 25%;
+ 
+}
+
+.rectangle2 {
+  width: 34px;
+
+  transform: rotate(-62deg);
+  top: 11px;
+  left: -11px;
+}
+
+.rectangle3 {
+  width: 34px;
+
+  transform: rotate(62deg);
+  top: 11px;
+  left: 37px;
+}
+.desk{
+  position: relative;
+  width: 10px;
+  border-bottom: 10px solid rgb(87, 230, 64);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+.desk1 {
+  top: 5px;
+  left: 0px;
+
+}
+ 
+.desk2 {
+  transform: rotate(63deg);
+
+  top: 15px;
+  left: 14px;
+
+}
+
+.desk3 {
+  transform: rotate(-63deg);
+
+  top:5px;
+  left: -15px;
+
+}
+
+
+.ustrect {
+  background-color: rgb(83, 102, 122);
+  margin: 0;
+  padding: 0;
+  height: 25px;
+  width: 50px;
+  border-bottom: 1px solid black;
+border-top-left-radius:3px;
+border-top-right-radius:3px;
+
+}
+
+.container {
+  display: inline-block;
+  transform: rotate(0deg);
+
+} 
+.pc1 {
+  position: absolute;
+  left:34%;
+  height: 10px;
+  width: 15px;
+  background-color: red;
+  top:3px;
+ border-radius: 3px;
+
+}
+
+.pc2 {
+  position: absolute; 
+  left:34%;
+  height: 10px; /* This line seems to be incomplete. Please provide a valid value. */
+  width: 15px; /* This line seems to be incomplete. Please provide a valid value. */
+   background-color: red;
+   bottom:3px;
+   border-radius: 3px;
+}
+
+.altrect {
+  background-color: rgb(83, 102, 122);
+  margin: 0;
+  padding: 0;
+  height: 25px;
+  width: 50px;
+   border-bottom-left-radius:3px;
+border-bottom-right-radius:3px;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+/* .desk{
+  border-style: solid;
+
+} */
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
