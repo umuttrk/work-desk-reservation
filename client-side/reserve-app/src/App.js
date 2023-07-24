@@ -1,21 +1,23 @@
 import './App.css';
-import React, { useState } from "react";
-import { BrowserRouter, Route, Routes, Router } from 'react-router-dom';
+import React  from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-//import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PrivateRoute from './components/PrivateRoute';
 import Home from './screens/Home';
-import AdminHomepage from './screens/AdminHomepage';
+import AdminPage from './screens/AdminPage';
+import DeskReservationPage from './screens/DeskReservationPage';
 import AdminFloorDesign from "./pages/adminFloorDesign";
 
 const App = () => {
   return (
     <>
-
       {<BrowserRouter>
         <Routes>
-        
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={<Home />} />
+          <Route
+            path="/desk-reservation/:floor"
+            element={<DeskReservationPage />} />
 
           <Route
             path="/admin-design-floor/:floor"
@@ -23,14 +25,10 @@ const App = () => {
           />
           <Route
             path="/admin"
-            element={<AdminHomepage />}
+            element={<AdminPage />}
           />
-
         </Routes>
       </BrowserRouter>}
-
-
-
     </>
   );
 };

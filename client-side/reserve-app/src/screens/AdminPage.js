@@ -1,12 +1,10 @@
 //katlar databaseden getirilecek
 import getFloors from "../api/floors";
-import {createFloor} from "../api/floors";
+import { createFloor } from "../api/floors";
 import React, { useState, useEffect, useRef } from "react";
-import { Routes, Route, useNavigate, Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import "../AdminHomepage.css";
-import AdminFloorDesign from "../pages/adminFloorDesign";
-import Authorization from "../components/PrivateRoute";
 
 const AdminHomepage = () => {
     const inputRef = useRef();
@@ -21,17 +19,17 @@ const AdminHomepage = () => {
         fetchData()
     }, []);
     function editFloor(params) {
-        navigate('/admin-design-floor/'+params)
+        navigate('/admin-design-floor/' + params)
     }
     const handleAddFloor = async (event) => {
         event.preventDefault();
         const result = await createFloor(inputRef.current.value)
         if (result.message === "success") {
-            setFloors((prevFloors) => [...prevFloors,result.data ])
-            inputRef.current.value=""
+            setFloors((prevFloors) => [...prevFloors, result.data])
+            inputRef.current.value = ""
 
-        }else{
-            inputRef.current.value="Farklı bir değer gir!"
+        } else {
+            inputRef.current.value = "Farklı bir değer gir!"
         }
         //navigate('/admin-design-floor')
     }
@@ -49,7 +47,7 @@ const AdminHomepage = () => {
                             editFloor(floor.floor_id)
                         }}> Düzenle</button>
                         <button onClick={(event) => {
-                           // editFloor(floor)
+                            // editFloor(floor)
                         }}> Sil</button>
                     </div>
 

@@ -25,11 +25,11 @@ const AdminFloorDesign = () => {
       result.data.forEach((data) => {
         if (data.desk_size === 2) {
           rectangleDeskElements.push(
-            <Rectangle key={data.desk_group_id} deskGroupKey={data.desk_group_id} positionX={data.position_x} positionY={data.position_y} rotate={data.rotation} desk={data.desks}/>
+            <Rectangle key={data.desk_group_id} deskGroupKey={data.desk_group_id} positionX={data.position_x} positionY={data.position_y} rotate={data.rotation} control={true}/>
           );
         } else if (data.desk_size === 3) {
           hexagonDeskElements.push(
-            <Hexagon key={data.desk_group_id} deskGroupKey={data.desk_group_id} positionX={data.position_x} positionY={data.position_y} rotate={data.rotation} desk={data.desks} />
+            <Hexagon key={data.desk_group_id} deskGroupKey={data.desk_group_id} positionX={data.position_x} positionY={data.position_y} rotate={data.rotation} control={true} />
           );
         }
       });
@@ -44,7 +44,8 @@ const AdminFloorDesign = () => {
   const handleAddHexagon = async () => {
     //veri tabanına ekle sonra idsini dön o id key olacak!
     const instanceDesk = await createDesk(floor, 100, 3, 100, 0,"test@mail.com");
-    setHexagonDesks((prevHexagonDesks) => [...prevHexagonDesks, <Hexagon key={instanceDesk.data.desk_group_id} deskGroupKey={instanceDesk.data.desk_group_id} desks={instanceDesk.desks}/>])
+    console.log(instanceDesk.data[0].desk_group_id)
+    setHexagonDesks((prevHexagonDesks) => [...prevHexagonDesks, <Hexagon key={instanceDesk.data[0].desk_group_id} deskGroupKey={instanceDesk.data[0].desk_group_id} control={true}/>])
   };
 
   const handleRemoveHexagon = async(key) => {
@@ -54,9 +55,12 @@ const AdminFloorDesign = () => {
   };
   const handleAddRectangle = async () => {
     //veri tabanına ekle sonra idsini dön o id key olacak!
-    const instanceDesk = await createDesk(floor, 100, 2, 100, 0,"owner@mail.com");
-    console.log(instanceDesk.data[0].desk_group_id)
-   setRectangleDesks((prevRectangleDesks) => [...prevRectangleDesks, <Rectangle key={instanceDesk.data.desk_group_id} deskGroupKey={instanceDesk.data.desk_group_id} desks={instanceDesk.desks} />])
+    await createDesk(floor, 100, 2, 100, 0,"owner@mail.com").then((instanceDesk)=>{
+      console.log(instanceDesk.data[0].desk_group_id)
+
+      setRectangleDesks((prevRectangleDesks) => [...prevRectangleDesks, <Rectangle key={instanceDesk.data[0].desk_group_id} deskGroupKey={instanceDesk.data[0].desk_group_id} control={true} />])
+
+    })
   };
 
   const handleRemoveRectangle = async(key) => {
@@ -71,7 +75,6 @@ const AdminFloorDesign = () => {
         hexagonDesks.map((desk) => (
           <div
             key={desk.key}
-
             onMouseUp={(e) => {
               if (e.button === 1) {
                 console.log(desk)

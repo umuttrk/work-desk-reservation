@@ -1,5 +1,5 @@
 export default async function getFloors() {
-    const rawResponse = await fetch("http://localhost:3001/api/reservation/get-all-floors", {
+    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/get-all-floors", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -13,7 +13,7 @@ export default async function getFloors() {
    return content;
 }
 export async function createFloor(floor_number) {
-    const rawResponse = await fetch("http://localhost:3001/api/reservation/create-floor", {
+    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/create-floor", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

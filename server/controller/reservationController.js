@@ -226,6 +226,7 @@ exports.updateDeskGroup = async (req, res) => {
         console.log(error)
         return res.status(500).send({ "error_message": error })
     }
+    console.log("başarılı")
     return res.status(200).send({ message: 'success', data: deskInstance })
 
 }

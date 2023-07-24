@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import getFloors from "../api/floors";
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
+    const navigate = useNavigate();
+
     function handleNavigateFloor(floor_id){
-        console.log(floor_id)
+        navigate('/desk-reservation/' + floor_id)
     }
     const [floors, setFloors] = useState([]);
 
