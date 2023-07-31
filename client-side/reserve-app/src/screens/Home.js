@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import getFloors from "../api/floors";
 import { useNavigate } from 'react-router-dom';
-
+import Reservations from "../components/Reservations";
 
 const Home = () => {
     const navigate = useNavigate();
 
-    function handleNavigateFloor(floor_id){
+    function handleNavigateFloor(floor_id) {
         navigate('/desk-reservation/' + floor_id)
     }
     const [floors, setFloors] = useState([]);
@@ -22,12 +22,17 @@ const Home = () => {
     return (
         <div>
             {floors.map((floor) => (
-                <button style={{
-                    width:100,
-                    height:75,
-                    margin:50
-                }} onClick={()=>handleNavigateFloor(floor.floor_id)} key={floor.floor_id}>KAT: {floor.floor_number}</button>
+                <button
+                className="btn" 
+                style={{
+                    width: 100,
+                    height: 75,
+                    margin: 50
+                }} onClick={() => handleNavigateFloor(floor.floor_id)} key={floor.floor_id}>KAT: {floor.floor_number}</button>
             ))}
+            <div className="reservations-container">
+                <Reservations mail={"modaljs115@mail.com"}></Reservations>
+            </div>
         </div>
     )
 }

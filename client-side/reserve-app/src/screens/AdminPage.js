@@ -3,12 +3,13 @@ import getFloors from "../api/floors";
 import { createFloor } from "../api/floors";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-
+import { getAllDesks } from "../api/desks"
 import "../AdminHomepage.css";
+import { deleteFloor } from "../api/floors";
 
 const AdminHomepage = () => {
     const inputRef = useRef();
-
+    const [showMessageModal, setshowMessageModal] = useState(false)
     const navigate = useNavigate();
     const [floors, setFloors] = useState([]);
     useEffect(() => {
@@ -33,7 +34,16 @@ const AdminHomepage = () => {
         }
         //navigate('/admin-design-floor')
     }
+    const handleDeleteFloor = async (floor_id) => {
+        const desks = await getAllDesks(floor_id);
 
+        if (desks.data.length === 0) {
+            await deleteFloor(floor_id)
+            setFloors(floors.filter(item => item.floor_id != floor_id))
+        } else {
+            setshowMessageModal(true)
+        }
+    }
     return (
 
         <>
@@ -47,7 +57,7 @@ const AdminHomepage = () => {
                             editFloor(floor.floor_id)
                         }}> Düzenle</button>
                         <button onClick={(event) => {
-                            // editFloor(floor)
+                            handleDeleteFloor(floor.floor_id)
                         }}> Sil</button>
                     </div>
 
@@ -65,7 +75,15 @@ const AdminHomepage = () => {
 
                     </>}
             </div>
-
+            {showMessageModal && <div className="modal">
+                <div className="modal-content">
+                To delete a floor, all desks have to be deleted belongs to that floor.
+                    <button className="close-modal btn" style={{backgroundColor:"red"}} onClick={()=>{setshowMessageModal(false)}}>
+                        X
+                    </button>
+                </div>
+                
+            </div>}
         </>
     )
 }

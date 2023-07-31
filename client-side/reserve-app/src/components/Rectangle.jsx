@@ -4,8 +4,8 @@ import MainDesk from "./MainDesk";
 import { PiOfficeChairBold } from "react-icons/pi";
 class Rectangle extends MainDesk {
     render() {
-        const { deskGroupKey, control ,desks} = this.props;
-        const { position, color, dragging, rotation } = this.state;
+        const { deskGroupKey, control, desks, onMouseOver, onMouseOut, color } = this.props;
+        const { position, dragging, rotation,colorIndicator } = this.state;
         return (
             <div className="container"
                 style={{
@@ -50,37 +50,62 @@ class Rectangle extends MainDesk {
             >
                 <div className="ustrect">
                     <div
-                         style={
+                        onMouseOver={(event) => {
+                            if (!control)
+                                onMouseOver(event.pageX, event.pageY, desks[0].desk_id)
+                            //handleMouseOver()
+                        }}
+                        onMouseOut={() => {
+                            onMouseOut()
+                        }}
+                        style={
                             {
                                 cursor: !control ? "pointer" : "context-menu",
+                                backgroundColor:color[0]
                             }
                         }
                         className="pc pc1"
                         onClick={() => {
-                            if(!control)
+                            if (!control)
                                 this.handleSelectDesk(desks[0].desk_id)
-                        }}>
-                            <PiOfficeChairBold style={{position:"absolute",top:-10,transform:"rotate(180deg)"}}></PiOfficeChairBold>
-                        </div>
+                        }}><span style={{ position: "absolute", color: "black" }}>{desks[0].desk_id}</span>
+                        <PiOfficeChairBold style={{ position: "absolute", top: -15, transform: "rotate(180deg)" }}></PiOfficeChairBold>
+                    </div>
                 </div>
                 <div className="altrect">
                     <div
+                        onMouseOver={(event) => {
+                            if (!control)
+                                onMouseOver(event.pageX, event.pageY, desks[1].desk_id)
+                            //handleMouseOver()
+                        }}
+                        onMouseOut={() => {
+                            onMouseOut()
+                        }}
                         style={
                             {
                                 cursor: !control ? "pointer" : "context-menu",
+                                backgroundColor: color[1]
                             }
                         }
                         className="pc pc2"
                         onClick={() => {
-                            if(!control)
+                            if (!control)
                                 this.handleSelectDesk(desks[1].desk_id)
-                        }}><PiOfficeChairBold style={{position:"absolute",bottom:-10}}></PiOfficeChairBold></div>
+                        }}>
+                        <span
+                            style={{ position: "absolute", color: "black" }}>
+                            {desks[1].desk_id}
+                        </span>
+                        <PiOfficeChairBold style={{ position: "absolute", bottom: -15 }}></PiOfficeChairBold>
+                    </div>
+
                 </div>
                 <div style={{
                     position: "absolute",
                     width: 10,
                     height: 10,
-                    backgroundColor: color,
+                    backgroundColor: colorIndicator,
                     display: control ? "block" : "none"
 
                 }} ></div>

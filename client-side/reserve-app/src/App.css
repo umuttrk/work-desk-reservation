@@ -1,4 +1,3 @@
-
 .ust {
 
   margin: 0px;
@@ -52,22 +51,33 @@
 .desk {
   position: relative;
   width: 10px;
-  border-bottom: 10px solid rgb(87, 230, 64);
+  /* border-bottom: 10px solid rgb(87, 230, 64); */
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
 }
 
-.desk:hover{
-  width: 12px;
-  border-bottom: 12px solid rgb(166, 231, 156);
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-}
 
 .desk1 {
   top: 5px;
   left: 0px;
 
+}
+
+.filterContainer {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgb(101, 102, 104);
+  position: relative;
+  left: 80%;
+  width: 250px;
+  height: 500px;
+  top: 100px;
+
+}
+
+.filterContainer h1 {
+  padding-top: 10px;
+  color: #d0d0d0;
 }
 
 .desk2 {
@@ -104,20 +114,29 @@
   transform: rotate(0deg);
 
 }
-.pc{
+
+.pc {
   position: absolute;
   left: 34%;
-  height: 10px;
-  width: 15px;
-  background-color: red;
+  height: 13px;
+  width: 17px;
+  
+
   border-radius: 3px;
 }
-.pc:hover{
+
+.pc span {
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.pc:hover {
   height: 13px;
   width: 18px;
   background-color: rgb(255, 69, 22);
 
 }
+
 .pc1 {
   top: 3px;
 }
@@ -136,3 +155,73 @@
   border-bottom-right-radius: 3px;
 }
 
+
+.reservations-container {
+  width: 40%;
+  height: 90%;
+  border-radius: 40px;
+  background-color: rgb(168, 169, 170);
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin: 25px;
+  padding: 25px;
+  overflow-y: scroll;
+}
+
+body {
+  background-color: rgb(211, 213, 214);
+  height: 100%;
+}
+
+
+.table-container {
+
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #d0d0d0;
+  background-color: #a8b2bd;
+  /* border-radius: 5px; */
+}
+
+#title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+th {
+  background-color: #6b90b8;
+  color: #ffffff;
+  text-align: left;
+}
+
+td:last-child {
+  text-align: center;
+}
+
+.btn {
+  background-color: #1274b6;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #c82333;
+}

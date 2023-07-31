@@ -26,20 +26,10 @@ exports.getAllFloors = async (req, res) => {
 }
 
 exports.getAllDesks = async (req, res) => {
-    const { floor } = req.body
+    const { floor } = req.params
     let results;
     try {
-
         results = await sequelize.query(
-
-
-            //     `
-            // SELECT *
-            // FROM floors
-            // INNER JOIN desk_groups ON desk_groups.floor_id = floors.floor_id
-            // INNER JOIN desks ON desks.desk_group_id = desk_groups.desk_group_id
-            // WHERE floors.floor_id = ${floor};`
-
             `
             SELECT 
                 floors.floor_number,
@@ -71,16 +61,33 @@ exports.getAllDesks = async (req, res) => {
     console.log(results)
     res.status(200).send({ message: 'success', data: results })
 }
+exports.deleteFloor=async (req,res)=>{
+    const {floor}=req.params;
+    try {
+        const row = await Floor.findOne(
+            {
+                where: {
+                    floor_id: floor
+                }
+            }
+        )
+        if (!row)
+            return res.status(400).send({ message: "Not found floor for your input id" })
+        await row.destroy();
+        return res.status(200).send({ message: 'success' })
+    } catch (error) {
+        return res.status(500).send({ "message": error })
+    }
 
-
+}
 exports.getBusyDates = async (req, res) => {
-    const { deskId } = req.body
+    const { deskId } = req.params
     let currentDate = moment(date).format('YYYY-MM-DD')
     console.log(currentDate)
     let dbResults;
     try {
         dbResults = await Reservation.findAll({
-            attributes: ['start_date', 'end_date'],
+            attributes: ['reservation_id','start_date', 'end_date','reserved_by'],
             where: {
                 desk_id: deskId,
                 end_date: {
@@ -91,29 +98,15 @@ exports.getBusyDates = async (req, res) => {
         )
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ "error_message": error })
+        return res.status(500).send({ "message": error })
     }
 
-
-    // dbResults.forEach((element) => {
-    //     if (currentDate < moment(element.end_date).utc().format('YYYY-MM-DD')) {
-    //         revisedResults.push({
-    //             "start_date": moment(element.start_date).utc().format('YYYY-MM-DD'),
-    //             "end_date": moment(element.end_date).utc().format('YYYY-MM-DD')
-
-    //         })
-    //     } else {
-    //         console.log("geçmiş tarih")
-    //     }
-    // });
-    //sadece rezervasyonların bitiş tarihi bugünün tarihinden sonra olanlar olacak şekilde filtrelendi
     res.status(200).send({ message: 'success', data: dbResults })
 }
 
-
 exports.reserveDesk = async (req, res) => {
     const { desk_id, start_date, end_date, mail } = req.body;
-
+    console.log(start_date)
     let reservationInstance;
     try {
         const isPossible = await isReservable(desk_id, start_date, end_date);
@@ -126,42 +119,86 @@ exports.reserveDesk = async (req, res) => {
             })
 
         } else {
-            return res.status(400).send({ message: 'Unvalid dates' })
+            return res.status(400).send({ message: 'Invalid dates' })
         }
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ "error_message": error })
+        return res.status(500).send({ "message": error })
     }
 
     res.status(200).send({ message: 'success', data: reservationInstance })
 
 }
 
-
-
 exports.getMyReservations = async (req, res) => {
-    const { mail } = req.body;
+    const { myMail } = req.params;
     let allReservations;
-    if (!mail) {
+    if (!myMail) {
         return res.status(400).send({ message: "enter valid mail" })
     }
     try {
         allReservations = await Reservation.findAll({
-            attributes: ['reservation_id', 'start_date', 'end_date'],
+            attributes: ['reservation_id', 'desk_id', 'start_date', 'end_date'],
             where: {
-                reserved_by: mail
+                reserved_by: myMail
             }
+            , order: [['updatedAt', 'DESC']]
         })
     } catch (error) {
-        return res.status(500).send({ "error_message": error })
+        console.log("hataaaa")
+        return res.status(500).send({ "message": error })
     }
     return res.status(200).send({ message: 'success', data: allReservations });
 }
 
+exports.filterDesks = async (req, res) => {
+    const { floor } = req.params;
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    let results;
 
+    busyDesks=[]
+    try {
+        results = await sequelize.query(
+        `
+            SELECT 
+                reservations.desk_id,
+                reservations.start_date,
+                reservations.end_date
+            FROM floors
+            INNER JOIN desk_groups ON desk_groups.floor_id = floors.floor_id
+            INNER JOIN desks ON desks.desk_group_id = desk_groups.desk_group_id
+            INNER JOIN reservations ON desks.desk_id = reservations.desk_id
+            WHERE floors.floor_id = ${floor} AND reservations.end_date >NOW()
+        `
+            ,
+            { type: QueryTypes.SELECT })
+
+
+            results.map((r)=>{
+                if (
+                    (startDate > endDate) ||
+                    (startDate == r.start_date) ||
+                    (endDate == r.end_date) ||
+                    (startDate <= r.start_date && endDate >= r.start_date) ||
+                    (startDate >= r.start_date && endDate <= r.end_date) ||
+                    (startDate <= r.end_date && endDate >= r.end_date)
+                ) {
+    
+                    busyDesks.push(r.desk_id)
+                }
+            })
+
+
+    } catch (error) {
+        console.log("hataaaa")
+        return res.status(500).send({ "message": error })
+    }
+    return res.status(200).send({ message: 'success', data: busyDesks });
+}
 
 exports.deleteMyReservation = async (req, res) => {
-    const { reservation_id } = req.body;
+    const { reservation_id } = req.params;
     try {
         const row = await Reservation.findOne(
             {
@@ -175,10 +212,11 @@ exports.deleteMyReservation = async (req, res) => {
         await row.destroy();
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ "error_message": error.message })
+        return res.status(500).send({ message: error.message })
     }
     res.status(200).send({ message: 'success' })
 }
+
 exports.createDesk = async (req, res) => {
     const { floor_id, position_x, desk_size, position_y, rotation, owner } = req.body;
     let deskGroupInstance;
@@ -203,11 +241,12 @@ exports.createDesk = async (req, res) => {
         resultDbDeskArray = await Desk.bulkCreate(deskArray);
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ "error_message": error })
+        return res.status(500).send({ "message": error })
     }
     return res.status(200).send({ message: 'success', data: resultDbDeskArray })
 
 }
+
 exports.updateDeskGroup = async (req, res) => {
     const { desk_group_id, position_x, position_y, rotation } = req.body;
     let deskInstance;
@@ -230,8 +269,9 @@ exports.updateDeskGroup = async (req, res) => {
     return res.status(200).send({ message: 'success', data: deskInstance })
 
 }
+
 exports.deleteDeskGroup = async (req, res) => {
-    const { desk_group_id } = req.body;
+    const { desk_group_id } = req.params;
     let row;
     try {
         row = await DeskGroup.findOne({
@@ -246,10 +286,9 @@ exports.deleteDeskGroup = async (req, res) => {
         console.log(error)
         return res.status(500).send({ "error_message": error })
     }
-    return res.status(200).send({ message: 'success'  })
+    return res.status(200).send({ message: 'success' })
 
 }
-
 
 exports.createFloor = async (req, res) => {
     const { floor_number } = req.body;
@@ -263,7 +302,7 @@ exports.createFloor = async (req, res) => {
     return res.status(200).send({ message: 'success', data: floor_instance })
 }
 async function isReservable(desk_id, startDate, endDate) {
-    let currentDate = moment(date).tz("UTC").format('YYYY-MM-DD')
+    let currentDate = moment(date).format('YYYY-MM-DD')
     let reservations;
     try {
         reservations = await Reservation.findAll({
@@ -293,7 +332,8 @@ async function isReservable(desk_id, startDate, endDate) {
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ "error_message": error })
+        console.log("285")
+        return res.status(500).send({ "message": error })
     }
 }
 

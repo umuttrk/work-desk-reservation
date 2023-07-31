@@ -11,7 +11,7 @@ class MainDesk extends Component {
             offset: { x: 0, y: 0 },
             position: { x: props.positionX || 100, y: props.positionY || 100 },
             rotation: props.rotate || 0,
-            color: "black"
+            colorIndicator: "black"
         }
     }
     handleDivClick = (divId) => {
@@ -34,7 +34,7 @@ class MainDesk extends Component {
         const result = await updateDesk(deskGroupKey, position.x, position.y, rotation);
         if (result.message==="success") {
             this.setState({
-                color: "green",
+                colorIndicator: "green",
                 dragging: true
             }) 
         }else{
@@ -46,7 +46,7 @@ class MainDesk extends Component {
     }
     handleDragEnd = (event) => {
         this.setState({
-            color: "orange",
+            colorIndicator: "orange",
             dragging: false,
             position: { x: event.clientX - this.state.offset.x, y: event.clientY - this.state.offset.y }
         })
@@ -57,7 +57,7 @@ class MainDesk extends Component {
         const { rotation } = this.state;
         const newRotation = rotation + event.deltaY / 25;
         this.setState({
-            color: "orange",
+            colorIndicator: "orange",
             rotation: newRotation
         })
     };
@@ -66,7 +66,7 @@ class MainDesk extends Component {
     }
     render() {
         // const { position, color  } = this.props;
-        const { dragging, rotation, position, color } = this.state;
+        const { dragging, rotation, position, colorIndicator } = this.state;
         return (
             <div
                 style={{
@@ -77,7 +77,7 @@ class MainDesk extends Component {
                     // height: 100,
                     border: "1px solid black",
                     overflow: "auto",
-                    border: "1px solid " + color,
+                    //border: "1px solid " + color,
                     cursor: dragging ? "grabbing" : "grab",
                     transform: `rotate(${rotation}deg)`, // Dönüş açısı burada uygulanır
                 }}
