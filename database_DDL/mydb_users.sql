@@ -1,0 +1,58 @@
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+--
+-- Host: localhost    Database: mydb
+-- ------------------------------------------------------
+-- Server version	8.0.33
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `mail` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `isAdmin` tinyint(1) DEFAULT '0',
+  `refreshToken` varchar(255) DEFAULT NULL,
+  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `mail` (`mail`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (2,'ali','ali@gmail.com','$2a$10$O8.7XJ/66MtYBRI0ueFYzOyg80hPT19iNJJs8Yb7gPLqsmYKi6Vtm',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYWxpQGdtYWlsLmNvbSIsImlhdCI6MTY5MDk3NzQwNn0.wxP49eSTCs4wkLsxHg9lWwTwmJdxG3ta5lf6DdJAtPQ','2023-08-02 11:21:11','2023-08-02 11:56:46'),(3,'test','test@mail.co','$2a$10$eRhCtF6pa2AyMJDj1v9ey.Sn0E8NfXUmAisa4pMkDGEO7UbgrZVh6',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidGVzdEBtYWlsLmNvIiwiaWF0IjoxNjkwOTc1NDA1fQ.5X6gSrnQJmJ2jbWlgpncXElMBX4ehFXAs46RnIHHJ1I','2023-08-02 11:23:25','2023-08-02 11:23:25'),(4,'ali','test1@gmail.com','$2a$10$HUn0QAjhimotQv7dQRo/OO5Y8LGh1Bk5mZaxbzKjKrk/QF00gjzw.',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjkwOTc1ODg0fQ.LesHl-_QKbpuVod3TTxSKPhWHJ-o9XdKFCzwrXz7nhg','2023-08-02 11:31:24','2023-08-02 11:31:24'),(5,'asdasdsa','asdasdsa@gmail.com','$2a$10$rGs.ZyWDY9UKad9GJ2HZxuTW3Y/BCnLEdUUSumDLnqdEHADyjE.52',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYXNkYXNkc2FAZ21haWwuY29tIiwiaWF0IjoxNjkwOTc1OTA5fQ.bMW5TchUYGSg2yukfcvcqCuYLkCcEaoU9n9HZz7t3GQ','2023-08-02 11:31:49','2023-08-02 11:31:49'),(6,'132456','123456@sssss.com','$2a$10$vv0gBQOcF3c4HVld2jkyXuGEKnC/7pbjM.4OCf4IKQzu5rvNBjNKa',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiMTIzNDU2QHNzc3NzLmNvbSIsImlhdCI6MTY5MDk3NTk1MX0.AKyBE8BzdhZL7bJgGm6bk3Nma6WWv0j_hONQPFKnwXo','2023-08-02 11:32:31','2023-08-02 11:32:31'),(7,'Umut','testtt@gmail.com','$2a$10$2WSe0TaH8ZKe5XSIDNMmVOxCChN.gbYwV//0oZCYf0GeqGboe6O0C',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidGVzdHR0QGdtYWlsLmNvbSIsImlhdCI6MTY5MDk3NjE0MH0.oYDzGZnBxJv5qnO6OfYYkoMIJ6KbuW4Fzmdlk8RVNUo','2023-08-02 11:35:40','2023-08-02 11:35:40'),(8,'umuyyy','29929@gmail.com','$2a$10$4D3V2B5FayOd6xhHatu.ae7CQmvb0EwwIaHt0CrJXaI37QTWLX8mW',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiMjk5MjlAZ21haWwuY29tIiwiaWF0IjoxNjkwOTc2MjE4fQ.ZLNQNE2JptT4OYtq3EhMlUyCXhJD7S2iNxkcQIVVl2E','2023-08-02 11:36:58','2023-08-02 11:36:58'),(9,'asdsadas','asdasdsad@gmail.com','$2a$10$fdBkb77.q3nppB3oGB3FZOjkMw2LrnWe2mKMbHQUtLO0KUSvgUEp.',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYXNkYXNkc2FkQGdtYWlsLmNvbSIsImlhdCI6MTY5MDk3NjI1Mn0.ELjrK_SsY8kXCj8NCDZyGEeimdcP4H19PhrmUIfrh6g','2023-08-02 11:37:32','2023-08-02 11:37:32'),(10,'sadsad','umut@gagas.com','$2a$10$uqOxrF5SesdQyYiORCZZku1LYupQNMtletrsrgHO9va3pGEhf13rC',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidW11dEBnYWdhcy5jb20iLCJpYXQiOjE2OTA5NzYzMzB9.9fau06mtKbx5l328oTDnqmHi9Q-ekvnJ9RtjseO_0Dc','2023-08-02 11:38:50','2023-08-02 11:38:50'),(11,'sadas','umust@gagas.com','$2a$10$UTA2zFbBBzX7CEVVLVdfbepHl1qaruQ//WfF.2L8HRNF1KyDHu2CG',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidW11c3RAZ2FnYXMuY29tIiwiaWF0IjoxNjkwOTc2MzY2fQ.EVTBJ4yzki5qX6RFWZ69JCWd1NgMwyjPBEWEWlY9Kz0','2023-08-02 11:39:26','2023-08-02 11:39:26'),(12,'sadas','umusts@gagas.com','$2a$10$g8f0SNrUIGEA/vkWlAUtCeXnMqvo3NCCdElmZyU/jA4ExEP0fmYxe',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidW11c3RzQGdhZ2FzLmNvbSIsImlhdCI6MTY5MDk3NjM4NH0.ZIVl_YH95MSwxt1REVEyCT-Kj-lRJbweWAej3m9vShk','2023-08-02 11:39:44','2023-08-02 11:39:44'),(13,'uasdnsuandau','sadsalkdjas@gmail.com','$2a$10$oZi97UrQH2R.2Rl8MgMmnuG/IkH1uGXdx7nG985LWQPP2uW5igdZG',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoic2Fkc2Fsa2RqYXNAZ21haWwuY29tIiwiaWF0IjoxNjkwOTc2NDIyfQ.hc1AqvCnxdmfmSDWNxSMIYiq62XAQbvw-BxJGpK7Gk8','2023-08-02 11:40:22','2023-08-02 11:40:22'),(14,'sadsadsa','sadsadsad@gmaill.com','$2a$10$5pJMPsexJUpKidwq/Zrffu7Wyu6KXMJ3bvkOdf0VwmCTYhRcj1ED6',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoic2Fkc2Fkc2FkQGdtYWlsbC5jb20iLCJpYXQiOjE2OTA5NzY0NTF9.-o8R6YhSHADd4MbRqfOEXwdh1n5wEiN_tUVm4ZbKZls','2023-08-02 11:40:51','2023-08-02 11:40:51'),(15,'ali2','ali2@gmail.com','$2a$10$ITvVydMFIRL2VNyp/xcRhesBSXOhphttmjQk344y6Ifnc9.emdPjO',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYWxpMkBnbWFpbC5jb20iLCJpYXQiOjE2OTA5NzY0ODJ9.ireOFhhSWvJ31SAcJDhFev7MhQoV9vK9xU-edWQCOKs','2023-08-02 11:41:22','2023-08-02 11:41:22'),(19,'umut','admin','$2a$10$wn4zhVNsSZqNqOQMj4H.ku7idH3uJDDCmI34OhgZULUCPqjIyXx2K',1,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYWRtaW4iLCJpYXQiOjE2OTExMjkzMTB9.oxlTCLy_k932GjcFdUz6GE0vWN15FHSkvzCMp_YgLcw','2023-08-02 11:57:31','2023-08-04 06:08:30'),(20,'test','test@gmail.com','$2a$10$0HdD.DFCe8w1U/RJQW7YfeV8vJI2rJwS4qajl1ikYCnEHomB.siUe',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2OTA5ODIzNDN9.qHoDNC_jGpGsiTYdK76t-M0U98CW4O7Jt-Uu-nh_eAU','2023-08-02 13:19:03','2023-08-02 13:19:03'),(21,'umut','umttrk19@gmail.com','$2a$10$is6bx/q4PbOab6QuwseLyOCJ4zDmjJnuvgr.zfrsoQEGscVcno05W',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoidW10dHJrMTlAZ21haWwuY29tIiwiaWF0IjoxNjkxMTI5NTQ2fQ.SF64z4-jdt47ryA2kNjlt4UApqG7NsrSv19XHjj69lE','2023-08-02 13:24:50','2023-08-04 06:12:26'),(22,'ali','ali.turk@orioninc.com','$2a$10$IvBiH8Qb.Ak/wpjaIwdzDu95i/ilMXndKWrmZQqcLr5yoyYKIapjO',0,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYWxpLnR1cmtAb3Jpb25pbmMuY29tIiwiaWF0IjoxNjkxMDY3MjAwfQ.-VWZCpRRFcT9A7iZreBT6CnV84Nd5hWPZ7quIzdlGqo','2023-08-02 13:50:04','2023-08-03 12:53:20');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-08-04 16:42:42
