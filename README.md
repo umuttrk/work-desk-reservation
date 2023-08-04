@@ -48,9 +48,9 @@ If returns ```status:expired``` in the client-side fetching refreshToken API it 
 
 
 ## TODO
-* Setting page
-* Improvement backend
+* User profile update page
+* Pagination for showMyReservations
 * Limitations for reservations
 * Improvement adminControl pop-up
-* Associate database mail of user and reserved_by
+* Associate user mail with reserved_by
 * ...
