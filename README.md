@@ -38,7 +38,7 @@ Little squares under a desk group indicates the status.
   * Position of desk group and rotation degree of desk group are saved to database.
  
 ### Backend
-There 17 API on this project. These are user operations(login,register,logout), reservation operations(getMyReservations,reserveDesk,deleteMyReservation,filter,...) and admin-based operations(createDesk,updateDesk,deleteDesk,...)
+There are 17 API on this project. These are user operations(login,register,logout), reservation operations(getMyReservations,reserveDesk,deleteMyReservation,filter,...) and admin-based operations(createDesk,updateDesk,deleteDesk,...)
 and finally, the refreshToken API that needs a little explaining.
 
 #### Authentication
