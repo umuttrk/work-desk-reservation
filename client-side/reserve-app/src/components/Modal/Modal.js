@@ -5,27 +5,34 @@ import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import "./Modal.css";
 import getBusyDates from '../../api/reservations';
+import { credentials } from '../../api/user';
 import CheckPopup from './CheckPop-up';
 import AdminControl from './AdminControl';
 
 const Modal = ({ deskId, onClose, onMessage }) => {
     const date = new Date();
     let currentDate = moment(date).format('YYYY-MM-DD')
-    const isAdmin = true;
+    const [isAdmin, setisAdmin] = useState(false)
     const [pageLoaded, setPageLoaded] = useState(false);
     const [checkModal, setCheckModal] = useState(false)
     const [busyDates, setBusyDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [boolCheck, setboolCheck] = useState();
     const [showAdminControlModal, setShowAdminControlModal] = useState(false)
+
+    
+
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getBusyDates(deskId);
+            const response = await getBusyDates(deskId,localStorage.getItem("mail"),localStorage.getItem("accessToken"));
+            const user=await credentials(localStorage.getItem("accessToken"),localStorage.getItem("mail"))
+            setisAdmin(user.data.isAdmin)
             setBusyDates(response.data);
             setPageLoaded(true)
         };
         fetchData();
     }, []);
+
     const isDateDisabled = (date) => {
         let dateFormatted = moment(date).format('YYYY-MM-DD');
         if (dateFormatted <= currentDate) {
@@ -41,6 +48,8 @@ const Modal = ({ deskId, onClose, onMessage }) => {
             return false;
         }
     };
+
+
     const handleDateChange = (date) => {
         if (isDateDisabled(date)) {
             setSelectedDate(null);
@@ -55,24 +64,27 @@ const Modal = ({ deskId, onClose, onMessage }) => {
         setSelectedDate(date)
         setboolCheck(true)
     }
+
+
+    const handleCloseCheckPopup = () => {
+
+        setCheckModal(false);
+    }
     const handleMessage = (msg) => {
         onMessage(msg)
     }
     const handleSubmitClick = () => {
         setCheckModal(true);
     }
+    const handleCancelClick = () => {
+        setSelectedDate(null);
+    };
 
-    const handleCloseCheckPopup = () => {
-
-        setCheckModal(false);
-    }
     const handleCloseAdminPopup = () => {
 
         setShowAdminControlModal(false);
     }
-    const handleCancelClick = () => {
-        setSelectedDate(null);
-    };
+
 
     if (pageLoaded) {
         return (
@@ -106,8 +118,8 @@ const Modal = ({ deskId, onClose, onMessage }) => {
                         <button className={"btn"} style={{ position: "absolute", right: 40, marginTop: 2 }} onClick={handleCancelClick}>Cancel</button>
                     )}
                 </div>
-                {checkModal && <CheckPopup dateInterval={selectedDate} desk_id={deskId} mail={"modaljs115@mail.com"} onMessage={handleMessage} onClose={handleCloseCheckPopup}></CheckPopup>}
-                {showAdminControlModal && <div className='adminContainer'><AdminControl busyDates={busyDates} onMessage={handleMessage} onClose={handleCloseAdminPopup} ></AdminControl></div>}
+                {checkModal && <CheckPopup dateInterval={selectedDate} desk_id={deskId} mail={localStorage.getItem("mail")} onMessage={handleMessage} onClose={handleCloseCheckPopup}></CheckPopup>}
+                {showAdminControlModal && <div className='adminContainer'><AdminControl desk_id={deskId }busyDates={busyDates} onMessage={handleMessage} onClose={handleCloseAdminPopup} ></AdminControl></div>}
             </div>
         );
     }

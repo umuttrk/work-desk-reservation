@@ -104,6 +104,7 @@ const Desk = sequelize.define("Desk", {
     }
 
 })
+
 const Floor = sequelize.define("Floor", {
 
     floor_id: {
@@ -128,7 +129,39 @@ const Floor = sequelize.define("Floor", {
 
 
 })
-
+const User = sequelize.define("User", {
+    user_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+    },
+    name:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    mail: {
+        type: DataTypes.STRING,
+        allowNull: false, unique: true//buraya bak
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }, isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }, refreshToken: {
+        type: DataTypes.STRING,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.literal('NOW()')
+    }
+})
 Floor.hasMany(DeskGroup, { foreignKey: 'floor_id' })
 DeskGroup.belongsTo(Floor, { foreignKey: 'floor_id' });
 
@@ -152,5 +185,6 @@ module.exports = {
     DeskGroup,
     Reservation,
     Floor,
-    Desk
+    Desk,
+    User
 };

@@ -14,7 +14,7 @@ const AdminHomepage = () => {
     const [floors, setFloors] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const result = await getFloors();
+            const result = await getFloors( localStorage.getItem("accessToken"), localStorage.getItem("mail"));
             setFloors(result.data);
         }
         fetchData()
@@ -24,7 +24,7 @@ const AdminHomepage = () => {
     }
     const handleAddFloor = async (event) => {
         event.preventDefault();
-        const result = await createFloor(inputRef.current.value)
+        const result = await createFloor(inputRef.current.value,localStorage.getItem("accessToken"), localStorage.getItem("mail"))
         if (result.message === "success") {
             setFloors((prevFloors) => [...prevFloors, result.data])
             inputRef.current.value = ""
@@ -35,10 +35,10 @@ const AdminHomepage = () => {
         //navigate('/admin-design-floor')
     }
     const handleDeleteFloor = async (floor_id) => {
-        const desks = await getAllDesks(floor_id);
+        const desks = await getAllDesks(floor_id,localStorage.getItem("mail"), localStorage.getItem("accessToken"));
 
         if (desks.data.length === 0) {
-            await deleteFloor(floor_id)
+            await deleteFloor(floor_id,localStorage.getItem("accessToken"), localStorage.getItem("mail"))
             setFloors(floors.filter(item => item.floor_id != floor_id))
         } else {
             setshowMessageModal(true)

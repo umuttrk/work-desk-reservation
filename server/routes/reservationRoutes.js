@@ -1,45 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const reservationController = require('../controller/reservationController')
+const tokenOperations = require('../utils/tokens');
+const verify = tokenOperations.verify;
 
 
 
 
 
 
-//GET ALL FLOORS ✓
-//GET ALL DESKS ✓
-//get busy dates of any desk that passed param ✓ 
-//reserve the desk that passed for desk_id and reserved_by and dates ✓
-//GET MY PAST reservations and FUTURE reservations ✓
-//cancel(delete) any reservation ✓
-
-router.get('/all-floors', reservationController.getAllFloors)
-router.get('/all-desks/:floor', reservationController.getAllDesks)
-router.get('/busy-dates/:deskId', reservationController.getBusyDates)
-router.post('/reserve-desk', reservationController.reserveDesk)
-router.get('/my-reservations/:myMail', reservationController.getMyReservations)
-router.delete('/delete-my-reservation/:reservation_id', reservationController.deleteMyReservation)
-router.post('/create-desk', reservationController.createDesk)
-router.put('/update-desk', reservationController.updateDeskGroup)
-router.delete('/delete-desk/:desk_group_id', reservationController.deleteDeskGroup)
-router.post('/create-floor', reservationController.createFloor)
-router.get('/filter-desks/:floor/', reservationController.filterDesks)
-router.delete('/floor/:floor',reservationController.deleteFloor)
 
 
-// TODO
-// Login register
-// Admin sayfasi oluştur
+router.get('/all-floors', verify, reservationController.getAllFloors)
+router.get('/all-desks/:floor', verify, reservationController.getAllDesks)
+router.get('/busy-dates/:deskId', verify, reservationController.getBusyDates)
+router.post('/reserve-desk', verify, reservationController.reserveDesk)
+router.get('/my-reservations/:myMail', verify, reservationController.getMyReservations)
+router.delete('/delete-my-reservation/:reservation_id', verify, reservationController.deleteMyReservation)
+router.post('/create-desk', verify, reservationController.createDesk)
+router.put('/update-desk', verify, reservationController.updateDeskGroup)
+router.delete('/delete-desk/:desk_group_id', verify, reservationController.deleteDeskGroup)
+router.post('/create-floor', verify, reservationController.createFloor)
+router.get('/filter-desks/:floor/', verify, reservationController.filterDesks)
+router.delete('/floor/:floor', verify, reservationController.deleteFloor)
 
 
-//FOR ADMIN
-
-
-//add new floor
-//add new desk
-//delete desk
-//delete a floor
 
 
 

@@ -53,7 +53,7 @@ const DeskReservationPage = () => {
     };
 
     const handleFilter = async (floor, start_date, end_date) => {
-        const result = await filterReservations(floor, start_date, end_date);
+        const result = await filterReservations(floor, start_date, end_date,localStorage.getItem("mail"),localStorage.getItem("accessToken"));
         var busyDesks = result.data;
         const updatedHexagonColors = hexagonDesks.map((hexagon) => {
             return {
@@ -112,8 +112,7 @@ const DeskReservationPage = () => {
     }
     useEffect(() => {
         const fetchData = async () => {
-            console.log('Sdad')
-            const result = await getAllDesks(floor);
+            const result = await getAllDesks(floor,localStorage.getItem("mail"),localStorage.getItem("accessToken"));
             const hexagonDeskElements = [];
             const rectangleDeskElements = [];
 
@@ -163,31 +162,20 @@ const DeskReservationPage = () => {
 
     return (
         <div
-        //   style={{
-        //     display:"absolute",
-        //     left:-100,
-        //     height:'100vh',
-        //     backgroundImage: `url(${process.env.PUBLIC_URL}/images/sss.png)`,
-        //     backgroundSize: 'cover',
-        //     backgroundRepeat: 'no-repeat',
-        //     backgroundPosition: 'center',
-        //   }} 
           >
-            
-            {
-                hexagonDesks.map((desk) => (
-
+            {hexagonDesks!=null&&
+              (  hexagonDesks.map((desk) => (
                     <div key={desk.key} >
                         {desk}
                     </div>
-                ))
+                )))
             }
             {
-                rectangleDesks.map((desk) => (
+               rectangleDesks!=null&&( rectangleDesks.map((desk) => (
                     <div key={desk.key}>
                         {desk}
                     </div>
-                ))
+                )))
             }
             <div className="filterContainer">
                 <div style={{ textAlign: "center" }}>

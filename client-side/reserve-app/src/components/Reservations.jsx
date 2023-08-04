@@ -13,12 +13,9 @@ const Reservations = (mail) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(mail.mail)
             let futureReservationsArray = [];
             let pastReservationsArray = [];
-            const response = await getMyReservations(mail.mail);
-            console.log(response)
-
+            const response = await getMyReservations(mail.mail,localStorage.getItem("accessToken"));
             if (response.message === "success") {
                 response.data.map((data) => {
                     if (data.end_date > currentDate) {
@@ -30,20 +27,16 @@ const Reservations = (mail) => {
                 setMyFutureReservations(futureReservationsArray)
                 setMyPastReservations(pastReservationsArray)
             }
-
-
             else {
                 setMessage(response.message)
                 setshowMessageModal(true)
-
             }
-
         };
         fetchData();
     }, [])
 
     const handleCancelReservation = async (reservation_id) => {
-        const response = await deleteMyReservation(reservation_id)
+        const response = await deleteMyReservation(reservation_id,localStorage.getItem("mail"),localStorage.getItem("accessToken"))
         if (response.message === "success") {
             setMyFutureReservations((current) =>
                 current.filter((r) => r.reservation_id !== reservation_id)
@@ -57,10 +50,7 @@ const Reservations = (mail) => {
     }
 
     return (
-
-
         <div className="table-container">
-
             <div id='title'> <span >My Reservations</span></div>
             <table>
                 <thead>
@@ -82,9 +72,11 @@ const Reservations = (mail) => {
                             </td>
                         </tr>
                     ))}
-                    <br />
+                    </tbody>
+                    <br/>
+                    <tbody>
                     {myPastReservations.map((item) => (
-                        <tr key={item.reservation_id}>
+                        <tr key={item.reservation_id} >
                             <td>{item.desk_id}</td>
                             <td>{moment(item.start_date).format("DD-MM-YYYY")}</td>
                             <td>{moment(item.end_date).format("DD-MM-YYYY")}</td>
@@ -107,35 +99,7 @@ const Reservations = (mail) => {
                 </div>
             </div>}
         </div>
-        // <div className="container" >
-        //     {myFutureReservations.map((reservation) => (
-        //         <div className='data-item'>
-        //                 <span>{reservation.end_date}</span>
-        //                 <span>{reservation.end_date}</span>
-        //                 <span>{reservation.end_date}</span>
-        //             <button>Buton</button>
-        //         </div>
-        //     ))}
 
-        //     <hr />
-        //     {myPastReservations.map((reservation) => (
-        //         <div className='data-item'>
-        //          <span>{reservation.end_date}</span>
-        //             <button>Buton</button>
-        //         </div>
-        //     ))}
-        //     {showMessageModal && <div className='modal rsr'>
-        //         <div className='modal-content'>
-        //             <h1>
-        //                 Mesaj:
-        //             </h1>
-        //             {message}
-        //             <button className="close-modal" onClick={() => { setshowMessageModal(false) }}>
-        //                 X
-        //             </button>
-        //         </div>
-        //     </div>}
-        // </div>
 
     )
 }

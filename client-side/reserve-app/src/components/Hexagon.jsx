@@ -6,17 +6,12 @@ class Hexagon extends MainDesk {
     render() {
         const { deskGroupKey, control, desks ,onMouseOver,onMouseOut,color} = this.props;
         const { position , dragging, rotation,colorIndicator } = this.state;
-
-     
         return (
-
             <div className="container"
                 style={{
-
                     position: "absolute",
                     left: position.x,
                     top: position.y,
-                    //cursor: dragging ? "grabbing" : "grab",
                     transform: `rotate(${rotation}deg)`,
                 }}
                 draggable
@@ -25,7 +20,6 @@ class Hexagon extends MainDesk {
                         this.handleDragStart(event)
                     else
                         return null;
-
                 }}
                 onDragEnd={
                     (event) => {
@@ -34,7 +28,6 @@ class Hexagon extends MainDesk {
                         else
                             return null;
                     }
-
                 }
                 onWheel={
                     (event) => {
@@ -64,15 +57,12 @@ class Hexagon extends MainDesk {
                             {
                                 cursor: !control ? "pointer" : "context-menu",
                                 borderBottom: `10px solid ${color[0]}`,
-                                
-
                             }
                         } className="desk desk1" onClick={() => {
                             if(!control)
                                 this.handleSelectDesk(desks[0].desk_id)
                         }}>
                             <span style={{position:"absolute",color:"black",fontSize:9,fontWeight:"bold"}}>{desks[0].desk_id}</span>
-                        
                             <PiOfficeChairBold style={{position:"absolute",top:-15}}></PiOfficeChairBold></div>
                 </div>
                 <div className="alt">

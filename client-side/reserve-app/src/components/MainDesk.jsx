@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { updateDesk } from "../api/desks";
-import { handlePopUp } from "../screens/DeskReservationPage"
 
 class MainDesk extends Component {
 
@@ -31,7 +30,7 @@ class MainDesk extends Component {
     };
     handleUpdate = async (deskGroupKey, position, rotation) => {
         console.log(deskGroupKey)
-        const result = await updateDesk(deskGroupKey, position.x, position.y, rotation);
+        const result = await updateDesk(deskGroupKey, position.x, position.y, rotation,localStorage.getItem("mail"),localStorage.getItem("accessToken"));
         if (result.message==="success") {
             this.setState({
                 colorIndicator: "green",

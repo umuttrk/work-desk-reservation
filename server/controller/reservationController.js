@@ -7,11 +7,15 @@ const { QueryTypes, where } = require('sequelize');
 const Sequelize = require('sequelize');
 var moment = require('moment');
 const { Op } = require('sequelize');
+const sendMail = require('../utils/mail').sendMail;
 
 const date = new Date();
+
+
 exports.getAllFloors = async (req, res) => {
     let allFloors;
     try {
+       
         allFloors = await Floor.findAll({
             raw: true,
             attributes: ['floor_id', 'floor_number']
@@ -125,8 +129,12 @@ exports.reserveDesk = async (req, res) => {
         console.log(error)
         return res.status(500).send({ "message": error })
     }
-
-    res.status(200).send({ message: 'success', data: reservationInstance })
+    try {
+        sendMail(mail,moment(start_date).format("DD-MM-YYYY"),moment(end_date).format("DD-MM-YYYY"),desk_id)
+    } catch (error) {
+        return res.status(500).send({ "message": error })
+    }
+   return res.status(200).send({ message: 'success', data: reservationInstance })
 
 }
 
@@ -301,6 +309,7 @@ exports.createFloor = async (req, res) => {
     }
     return res.status(200).send({ message: 'success', data: floor_instance })
 }
+
 async function isReservable(desk_id, startDate, endDate) {
     let currentDate = moment(date).format('YYYY-MM-DD')
     let reservations;

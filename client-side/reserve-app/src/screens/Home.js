@@ -12,13 +12,17 @@ const Home = () => {
     const [floors, setFloors] = useState([]);
 
     useEffect(() => {
+        var token=localStorage.getItem("accessToken")
+        if(!token)
+            navigate('/login')
         const fetchData = async () => {
-            const result = await getFloors();
-            setFloors(result.data);
+            const result = await getFloors(token,localStorage.getItem("mail"));
+            if(result.message==="success")
+                setFloors(result.data);
         }
         fetchData()
     }, []);
-
+console.log(floors)
     return (
         <div>
             {floors.map((floor) => (
@@ -31,8 +35,20 @@ const Home = () => {
                 }} onClick={() => handleNavigateFloor(floor.floor_id)} key={floor.floor_id}>KAT: {floor.floor_number}</button>
             ))}
             <div className="reservations-container">
-                <Reservations mail={"modaljs115@mail.com"}></Reservations>
+                <Reservations mail={localStorage.getItem("mail")}></Reservations>
             </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <button onClick={()=>{
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+                localStorage.removeItem("mail");
+                navigate('/login')
+            }}className="btn" style={{backgroundColor:"brown"}}>Log out</button>
         </div>
     )
 }

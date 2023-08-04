@@ -11,7 +11,9 @@ const CheckPopup = ({ dateInterval, onClose, desk_id, mail, onMessage }) => {
             desk_id,
             moment(dateInterval[0]).format("YYYY-MM-DD"),
             moment(dateInterval[1]).format("YYYY-MM-DD"),
-            mail
+            mail,
+            localStorage.getItem("mail"),
+            localStorage.getItem("accessToken")
         )
 
         if (response.message === "success") {
@@ -45,7 +47,7 @@ const CheckPopup = ({ dateInterval, onClose, desk_id, mail, onMessage }) => {
                     <br />
                     arası rezerve edilecek devam etmek istiyor musunuz?
                     <br />
-
+                    mail:{mail}
                     <br />
                     <button  className={"btn"} onClick={handleReserve}>
                         Onaylıyorum

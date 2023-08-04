@@ -40,6 +40,38 @@ body.active-modal {
     max-width: 600px;
     min-width: 300px;
 }
+.modal-content-admin{
+    border:1px solid black;
+    box-shadow: 3px 5px #888888;
+   
+   
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+}
+.modal-content-admin-calendar{
+    border:1px solid black;
+    box-shadow: 3px 5px #888888;
+    height: 70%;
+   width: 20%;
+    position: absolute;
+    top: 40%;
+    left: 61%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+}
 .mdl{background: #e2e1e1;}
 .test{
     height: 70%;
