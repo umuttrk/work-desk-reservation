@@ -12,9 +12,9 @@ import { useParams } from 'react-router-dom';
 const AdminFloorDesign = () => {
 
   const { floor } = useParams();
+
   const [hexagonDesks, setHexagonDesks] = useState([]);
   const [rectangleDesks, setRectangleDesks] = useState([]);
-
 
 
   useEffect(() => {
@@ -43,25 +43,25 @@ const AdminFloorDesign = () => {
   }, [floor]);
 
   const handleAddHexagon = async () => {
-    //veri tabanına ekle sonra idsini dön o id key olacak!
     const instanceDesk = await createDesk(floor, 100, 3, 100, 0, "owner@mail.com", localStorage.getItem("mail"), localStorage.getItem("accessToken"));
-    setHexagonDesks((prevHexagonDesks) => [...prevHexagonDesks, <Hexagon key={instanceDesk.data[0].desk_group_id} deskGroupKey={instanceDesk.data[0].desk_group_id} control={true} onMouseOver={() => { }} onMouseOut={() => { }} desks={[0, 1, 2]} color={["white", "white", "white"]} />])
+    setHexagonDesks((prevHexagonDesks) => [...prevHexagonDesks,
+    <Hexagon key={instanceDesk.data[0].desk_group_id} deskGroupKey={instanceDesk.data[0].desk_group_id}
+      control={true} onMouseOver={() => { }} onMouseOut={() => { }} desks={[0, 1, 2]} color={["white", "white", "white"]} />])
   };
 
+  const handleAddRectangle = async () => {
+    await createDesk(floor, 100, 2, 100, 0, "owner@mail.com", localStorage.getItem("mail"), localStorage.getItem("accessToken"))
+      .then((instanceDesk) => {
+        setRectangleDesks((prevRectangleDesks) => [...prevRectangleDesks,
+        <Rectangle key={instanceDesk.data[0].desk_group_id} deskGroupKey={instanceDesk.data[0].desk_group_id}
+          control={true} onMouseOver={() => { }} onMouseOut={() => { }} desks={[0, 1, 2]} color={["white", "white", "white"]} />])
+      })
+  };
   const handleRemoveHexagon = async (key) => {
     const newDesks = hexagonDesks.filter((desk) => desk.key !== key);
     await deleteDesk(key, localStorage.getItem("mail"), localStorage.getItem("accessToken"));
     setHexagonDesks(newDesks);
   };
-  const handleAddRectangle = async () => {
-    //veri tabanına ekle sonra idsini dön o id key olacak!
-    await createDesk(floor, 100, 2, 100, 0, "owner@mail.com", localStorage.getItem("mail"), localStorage.getItem("accessToken"))
-      .then((instanceDesk) => {
-        setRectangleDesks((prevRectangleDesks) => [...prevRectangleDesks, <Rectangle key={instanceDesk.data[0].desk_group_id} deskGroupKey={instanceDesk.data[0].desk_group_id} control={true} onMouseOver={() => { }} onMouseOut={() => { }} desks={[0, 1, 2]} color={["white", "white", "white"]} />])
-
-      })
-  };
-
   const handleRemoveRectangle = async (key) => {
     const newDesks = rectangleDesks.filter((desk) => desk.key !== key);
     await deleteDesk(key, localStorage.getItem("mail"), localStorage.getItem("accessToken"));

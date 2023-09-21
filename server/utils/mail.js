@@ -1,8 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-
-
 exports.sendMail = (email,start_date,end_date,desk_id) => {
 
     var Transport = nodemailer.createTransport({

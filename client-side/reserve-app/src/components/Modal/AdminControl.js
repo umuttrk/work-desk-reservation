@@ -71,7 +71,6 @@ const AdminControl = ({ desk_id,busyDates, onClose, onMessage }) => {
         <>
             <div className="modal" >
                 <div className="modal-content-admin mdl test">
-
                     <table>
                         <thead>
                             <tr>
@@ -92,11 +91,8 @@ const AdminControl = ({ desk_id,busyDates, onClose, onMessage }) => {
                                     </td>
                                 </tr>
                             ))}
-
                         </tbody>
                     </table>
-
-
                 </div>
 
                 <div className='modal-content-admin-calendar mdl' style={{

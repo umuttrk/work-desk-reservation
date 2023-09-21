@@ -162,6 +162,7 @@ const User = sequelize.define("User", {
         defaultValue: sequelize.literal('NOW()')
     }
 })
+
 Floor.hasMany(DeskGroup, { foreignKey: 'floor_id' })
 DeskGroup.belongsTo(Floor, { foreignKey: 'floor_id' });
 

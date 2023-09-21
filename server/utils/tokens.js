@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || "*/*s2039lsss/;1919";
 const jwt=require('jsonwebtoken');
 
 const decodingJWT = (token) => {

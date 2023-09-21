@@ -1,7 +1,7 @@
 import { refreshToken } from "./user";  
 
 export default async function getBusyDates(desk_id,mail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/busy-dates/" + desk_id, {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/busy-dates/" + desk_id, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -22,7 +22,7 @@ export default async function getBusyDates(desk_id,mail,token) {
 
 
 export async function reserveDesk(desk_id, start_date, end_date, mail,reserverMail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/reserve-desk", {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/reserve-desk", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -44,7 +44,7 @@ export async function reserveDesk(desk_id, start_date, end_date, mail,reserverMa
 }
 
 export async function getMyReservations(mail, token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/my-reservations/" + mail, {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/my-reservations/" + mail, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -64,7 +64,7 @@ export async function getMyReservations(mail, token) {
 }
 
 export async function deleteMyReservation(reservation_id, mail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/delete-my-reservation/" + reservation_id, {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/delete-my-reservation/" + reservation_id, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',
@@ -84,7 +84,8 @@ export async function deleteMyReservation(reservation_id, mail,token) {
 }
 
 export async function filterReservations(floor, start_date, end_date,mail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/filter-desks/" + floor + "?startDate=" + start_date + "&endDate=" + end_date, {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/filter-desks/" + floor + "?startDate=" + start_date + "&endDate=" + end_date,
+     {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -93,6 +94,8 @@ export async function filterReservations(floor, start_date, end_date,mail,token)
             'mail': mail
         },
     });
+
+    
     const content = await rawResponse.json();
     if (content.status === "expired") {
         const RefreshStatus = await refreshToken();

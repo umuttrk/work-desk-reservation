@@ -8,24 +8,19 @@ const Sequelize = require('sequelize');
 var moment = require('moment');
 const { Op } = require('sequelize');
 const sendMail = require('../utils/mail').sendMail;
-
 const date = new Date();
 
 
-exports.getAllFloors = async (req, res) => {
+exports.    getAllFloors = async (req, res) => {
     let allFloors;
     try {
-       
         allFloors = await Floor.findAll({
             raw: true,
             attributes: ['floor_id', 'floor_number']
-            //Other parameters
         });
     } catch (error) {
         return res.status(500).send({ "error_message": error })
     }
-    // let floor_array = []
-    // allFloors.map(e => floor_array.push(e.floor_number))
     res.status(200).send({ message: 'success', data: allFloors })
 }
 
@@ -153,57 +148,12 @@ exports.getMyReservations = async (req, res) => {
             , order: [['updatedAt', 'DESC']]
         })
     } catch (error) {
-        console.log("hataaaa")
         return res.status(500).send({ "message": error })
     }
     return res.status(200).send({ message: 'success', data: allReservations });
 }
 
-exports.filterDesks = async (req, res) => {
-    const { floor } = req.params;
-    const startDate = req.query.startDate;
-    const endDate = req.query.endDate;
-    let results;
 
-    busyDesks=[]
-    try {
-        results = await sequelize.query(
-        `
-            SELECT 
-                reservations.desk_id,
-                reservations.start_date,
-                reservations.end_date
-            FROM floors
-            INNER JOIN desk_groups ON desk_groups.floor_id = floors.floor_id
-            INNER JOIN desks ON desks.desk_group_id = desk_groups.desk_group_id
-            INNER JOIN reservations ON desks.desk_id = reservations.desk_id
-            WHERE floors.floor_id = ${floor} AND reservations.end_date >NOW()
-        `
-            ,
-            { type: QueryTypes.SELECT })
-
-
-            results.map((r)=>{
-                if (
-                    (startDate > endDate) ||
-                    (startDate == r.start_date) ||
-                    (endDate == r.end_date) ||
-                    (startDate <= r.start_date && endDate >= r.start_date) ||
-                    (startDate >= r.start_date && endDate <= r.end_date) ||
-                    (startDate <= r.end_date && endDate >= r.end_date)
-                ) {
-    
-                    busyDesks.push(r.desk_id)
-                }
-            })
-
-
-    } catch (error) {
-        console.log("hataaaa")
-        return res.status(500).send({ "message": error })
-    }
-    return res.status(200).send({ message: 'success', data: busyDesks });
-}
 
 exports.deleteMyReservation = async (req, res) => {
     const { reservation_id } = req.params;
@@ -273,7 +223,6 @@ exports.updateDeskGroup = async (req, res) => {
         console.log(error)
         return res.status(500).send({ "error_message": error })
     }
-    console.log("başarılı")
     return res.status(200).send({ message: 'success', data: deskInstance })
 
 }
@@ -341,9 +290,51 @@ async function isReservable(desk_id, startDate, endDate) {
 
     } catch (error) {
         console.log(error)
-        console.log("285")
         return res.status(500).send({ "message": error })
     }
 }
 
 
+
+exports.filterDesks = async (req, res) => {
+    const { floor } = req.params;
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    let results;
+
+    busyDesks=[]
+    try {
+        results = await sequelize.query(
+        `
+            SELECT 
+                reservations.desk_id,
+                reservations.start_date,
+                reservations.end_date
+            FROM floors
+            INNER JOIN desk_groups ON desk_groups.floor_id = floors.floor_id
+            INNER JOIN desks ON desks.desk_group_id = desk_groups.desk_group_id
+            INNER JOIN reservations ON desks.desk_id = reservations.desk_id
+            WHERE floors.floor_id = ${floor} AND reservations.end_date >NOW()
+        `
+            ,
+            { type: QueryTypes.SELECT })
+
+
+            results.map((r)=>{
+                if (
+                    (startDate > endDate) ||
+                    (startDate == r.start_date) ||
+                    (endDate == r.end_date) ||
+                    (startDate <= r.start_date && endDate >= r.start_date) ||
+                    (startDate >= r.start_date && endDate <= r.end_date) ||
+                    (startDate <= r.end_date && endDate >= r.end_date)
+                ) {
+    
+                    busyDesks.push(r.desk_id)
+                }
+            })
+    } catch (error) {
+        return res.status(500).send({ "message": error })
+    }
+    return res.status(200).send({ message: 'success', data: busyDesks });
+}

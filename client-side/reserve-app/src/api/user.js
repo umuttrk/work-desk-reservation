@@ -1,6 +1,6 @@
 
 export default async function login(mail,password) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/user/login", {
+    const rawResponse = await fetch("http://localhost:3001/api/user/login", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -13,7 +13,7 @@ export default async function login(mail,password) {
    return content;
 }
 export async function credentials(token,mail) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/user/credentials/"+mail, {
+    const rawResponse = await fetch("http://localhost:3001/api/user/credentials/"+mail, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -32,7 +32,7 @@ export async function credentials(token,mail) {
         return content;
     }}
 export async function register(name,mail,password) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/user/register", {
+    const rawResponse = await fetch("http://localhost:3001/api/user/register", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -45,7 +45,7 @@ export async function register(name,mail,password) {
    return content;
 }
 export async function logout(token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/user/logout", {
+    const rawResponse = await fetch("http://localhost:3001/api/user/logout", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -59,8 +59,7 @@ export async function logout(token) {
 }
 export async function refreshToken() {
     var token = localStorage.getItem("refreshToken");
-    console.log("tokekekeokeoken   "+token)
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/user/refreshtoken", {
+    const rawResponse = await fetch("http://localhost:3001/api/user/refreshtoken", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

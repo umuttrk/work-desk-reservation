@@ -64,12 +64,5 @@ export default function SignIn() {
         </body>
     )
 
-    {/* <div >
-                    <input type="text" placeholder="Username" value={username} autoComplete="off" onChange={(e) => { setUsername(e.target.value); }}></input>
-                    <input type="password" id="PasswordInput" onKeyDown={onKeyDown} placeholder="Password" value={password} autoComplete="off" onChange={(e) => { setPassword(e.target.value); }}></input>
-                    <button onClick={handleSignIn}>Log in</button>
-                    <button onClick={() => {
-                            navigate('/register')
-                    }} >Sign Up</button>
-            </div> */}
+
 }

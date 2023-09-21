@@ -2,16 +2,13 @@ require('dotenv').config();
 
 const { Sequelize } = require('sequelize');
 
+const pass = process.env.PASS || "root";
+const user = process.env.USER || "root";
 
-const pass = process.env.PASS;
-const user = process.env.USER;
-
-const sequelize = new Sequelize('myDb', user, pass, {
+const sequelize = new Sequelize('reserve_app', user, pass, {
     host: 'localhost',
     dialect: 'mysql',
 });
-
-
 
 const onConnect = async () => {
     try {

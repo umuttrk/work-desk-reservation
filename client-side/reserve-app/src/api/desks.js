@@ -2,7 +2,7 @@ import { refreshToken } from "./user";
 
 //TEST
 export default async function createDesk(floor_id, position_x,desk_size,position_y,rotation,owner,mail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/create-desk", {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/create-desk", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -26,7 +26,7 @@ export default async function createDesk(floor_id, position_x,desk_size,position
 
 //TEST
 export async function updateDesk(desk_group_id,position_x,position_y,rotation,mail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/update-desk", {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/update-desk", {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -49,7 +49,7 @@ export async function updateDesk(desk_group_id,position_x,position_y,rotation,ma
 
 //TEST
 export async function deleteDesk(desk_group_id,mail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/delete-desk/"+desk_group_id, {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/delete-desk/"+desk_group_id, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',
@@ -70,7 +70,7 @@ export async function deleteDesk(desk_group_id,mail,token) {
 }
 
 export async function getAllDesks(floor,mail,token) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/all-desks/"+floor, {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/all-desks/"+floor, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -79,6 +79,8 @@ export async function getAllDesks(floor,mail,token) {
             'mail':mail
         },
     });
+
+    
 
     const content = await rawResponse.json();
     if (content.status === "expired") {

@@ -1,7 +1,7 @@
 import { refreshToken } from "./user";  
 
 export default async function getFloors(token,mail) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/all-floors", {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/all-floors", {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -23,7 +23,7 @@ export default async function getFloors(token,mail) {
 
 //TEST
 export async function createFloor(floor_number,token,mail) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/create-floor", {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/create-floor", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -44,7 +44,7 @@ export async function createFloor(floor_number,token,mail) {
 }
 //TEST
 export async function deleteFloor(floor_number,token,mail) {
-    const rawResponse = await fetch("http://192.168.1.113:3001/api/reservation/floor/" + floor_number, {
+    const rawResponse = await fetch("http://localhost:3001/api/reservation/floor/" + floor_number, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',

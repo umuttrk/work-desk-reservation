@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 const bcrypt = require('bcryptjs');
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET || "*/*s2039lsss/;1919"
 const tokenOperations = require('../utils/tokens');
 const { where } = require('sequelize');
 const validateEmail = require('../utils/validateMail');
@@ -29,6 +29,7 @@ exports.refreshToken = async (req, res) => {
 
         jwt.verify(refreshToken, JWT_SECRET, async (err, user) => {
             console.log('controller>refreshToken-api')
+            console.log(JWT_SECRET)
             console.log(user)
             err ? console.log(err) : '';
             const newAccessToken = tokenOperations.generateAccessToken( user.mail);
@@ -132,7 +133,7 @@ exports.postRegister = async (req, res) => {
     }
     if (!password || typeof password !== 'string') {
         return res.status(400).json({ status: 'fail', message: 'Invalid password' })
-    } if (password.length < 6) {
+    } if (password.length < 3) {
         return res.status(400).json({ status: 'fail', message: 'Too small password.Should be greater than 6 character' })
     }
     if (!validateEmail.validateEmail(mail)) {
@@ -161,7 +162,6 @@ exports.postRegister = async (req, res) => {
             return res.status(403).json({ status: 'fail', message: err })
         })
     } catch (error) {
-        console.log("sladkjlasdjklsajdklsajdlkasjdlkasjdlkasjdlksdjlks")
         console.log(error.code)
         return res.status(403).json({ status: 'fail', message: error.message })
     }
